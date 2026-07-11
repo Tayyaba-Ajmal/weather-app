@@ -1,0 +1,40 @@
+.isobar-field path {
+    animation: drift 60s linear infinite;
+}
+
+.isobar-field path:nth-of-type(odd) {
+    animation-direction: reverse;
+    animation-duration: 75s;
+}
+
+@keyframes drift {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-56px);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s var(--ease) both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .isobar-field path {
+        animation: none;
+    }
+}

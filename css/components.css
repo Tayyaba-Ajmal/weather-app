@@ -1,0 +1,199 @@
+.input {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--size-sm);
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.btn {
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease), transform 0.1s var(--ease);
+}
+
+.btn:hover {
+  border-color: var(--text-tertiary);
+  background: var(--surface-sunken);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #3a7bc8;
+  border-color: #3a7bc8;
+}
+
+.btn--text {
+  border: none;
+  background: none;
+  padding: var(--space-1) 0;
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  font-weight: 500;
+}
+
+.btn--text:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.unit-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  background: var(--surface-sunken);
+}
+
+.unit-toggle button {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--size-xs);
+  font-weight: 600;
+  border-radius: 6px;
+  color: var(--text-secondary);
+  transition: background 0.15s var(--ease), color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.unit-toggle button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.suggestions__item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--size-sm);
+  border-radius: var(--radius-sm);
+}
+
+.suggestions__item:hover,
+.suggestions__item:focus-visible {
+  background: var(--surface-sunken);
+}
+
+.message-row[data-tone="error"] {
+  color: var(--danger);
+  font-size: var(--size-sm);
+}
+
+.message-row[data-tone="info"] {
+  color: var(--text-tertiary);
+  font-size: var(--size-sm);
+}
+
+.icon,
+.icon * {
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.readout-card__icon,
+.readout-card__icon * {
+  stroke: var(--text-tertiary);
+}
+
+.recent-list button {
+  font-size: var(--size-xs);
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  color: var(--text-secondary);
+  background: var(--surface);
+}
+
+.recent-list button:hover {
+  border-color: var(--text-tertiary);
+  color: var(--text-primary);
+}
+
+/* ---- API key modal ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 11, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: var(--space-4);
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 420px;
+  width: 100%;
+  padding: var(--space-6);
+}
+
+.modal h2 {
+  font-size: var(--size-xl);
+  margin-bottom: var(--space-2);
+}
+
+.modal p {
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: 1.55;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--text-secondary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

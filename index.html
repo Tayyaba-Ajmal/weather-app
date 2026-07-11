@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather-App</title>
+    <meta
+      name="description"
+      content="A clean, modern weather lookup with a live temperature trend."
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav__inner">
+        <div class="nav__brand">
+          <span class="nav__brand-mark" aria-hidden="true"></span>
+          <span>Weather</span>
+        </div>
+
+        <form class="nav__search" id="searchForm" autocomplete="off">
+          <label for="cityInput" class="visually-hidden"
+            >Search for a place..</label
+          >
+          <input
+            class="input"
+            id="cityInput"
+            type="text"
+            placeholder="Search a city..."
+          />
+          <div class="suggestions" id="suggestions" hidden></div>
+        </form>
+
+        <div class="nav__actions">
+          <button
+            type="button"
+            class="btn"
+            id="locateBtn"
+            title="Use my current location"
+          >
+            Locate
+          </button>
+          <div
+            class="unit-toggle"
+            id="unitToggle"
+            role="group"
+            aria-label="Temperature units"
+          >
+            <button type="button" data-unit="metric" aria-pressed="true">
+              °C
+            </button>
+            <button type="button" data-unit="imperial" aria-pressed="false">
+              °F
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="shell">
+      <div
+        class="message-row"
+        id="message"
+        role="status"
+        aria-live="polite"
+      ></div>
+      <div class="recent-list" id="recentList"></div>
+
+      <section class="skeleton" id="skeleton" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Fetching current conditions…</span>
+      </section>
+
+      <section id="weatherView" hidden aria-live="polite">
+        <div class="hero fade-in">
+          <div class="hero__glow" aria-hidden="true"></div>
+          <div class="hero__content">
+            <div>
+              <div class="hero__location" id="placeLabel">—</div>
+              <div class="hero__condition" id="conditionLabel">—</div>
+              <div class="hero__temp-row">
+                <svg
+                  class="icon hero__icon"
+                  id="conditionIcon"
+                  viewBox="0 0 56 56"
+                  aria-hidden="true"
+                ></svg>
+                <div>
+                  <div class="hero__temp" id="tempValue">—</div>
+                  <div class="hero__feels" id="feelsLike">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card fade-in-delay-1">
+          <div class="chart-card__head">
+            <span class="chart-card__title">Temperature trend</span>
+            <span class="eyebrow" id="chartRange">—</span>
+          </div>
+          <div id="trendChart"></div>
+          <div class="chart-card__labels" id="trendLabels"></div>
+        </div>
+
+        <div class="readouts fade-in-delay-1">
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <path
+                  d="M28 8c-9 13-15 20-15 28a15 15 0 0 0 30 0c0-8-6-15-15-28z"
+                />
+              </svg>
+              <span>Humidity</span>
+            </div>
+            <div class="readout-card__value" id="readoutHumidity">—</div>
+          </div>
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <path d="M6 20h28a6 6 0 1 0-5-9" />
+                <path d="M6 30h36a6 6 0 1 1-5 9" />
+              </svg>
+              <span>Wind</span>
+            </div>
+            <div class="readout-card__value" id="readoutWind">—</div>
+          </div>
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <circle cx="28" cy="28" r="18" />
+                <line x1="28" y1="28" x2="28" y2="16" />
+                <line x1="28" y1="28" x2="37" y2="28" />
+              </svg>
+              <span>Pressure</span>
+            </div>
+            <div class="readout-card__value" id="readoutPressure">—</div>
+          </div>
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <line x1="10" y1="24" x2="34" y2="24" />
+                <line x1="10" y1="32" x2="46" y2="32" />
+                <line x1="16" y1="40" x2="42" y2="40" />
+              </svg>
+              <span>Visibility</span>
+            </div>
+            <div class="readout-card__value" id="readoutVisibility">—</div>
+          </div>
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <circle cx="28" cy="34" r="10" />
+                <line x1="28" y1="8" x2="28" y2="16" />
+                <line x1="10" y1="34" x2="4" y2="34" />
+                <line x1="52" y1="34" x2="46" y2="34" />
+              </svg>
+              <span>Sunrise</span>
+            </div>
+            <div class="readout-card__value" id="readoutSunrise">—</div>
+          </div>
+          <div class="readout-card">
+            <div class="readout-card__label">
+              <svg
+                class="icon readout-card__icon"
+                viewBox="0 0 56 56"
+                aria-hidden="true"
+              >
+                <path d="M38 14a17 17 0 1 0 6 26 14 14 0 0 1-6-26z" />
+              </svg>
+              <span>Sunset</span>
+            </div>
+            <div class="readout-card__value" id="readoutSunset">—</div>
+          </div>
+        </div>
+
+        <section class="forecast fade-in-delay-2">
+          <h3 class="forecast__title">5-day forecast</h3>
+          <div class="forecast__row" id="forecastRow"></div>
+        </section>
+      </section>
+
+      <footer class="footer">
+        <span>Data from OpenWeatherMap</span>
+        <button type="button" class="btn--text" id="changeKeyBtn">
+          Change API key
+        </button>
+      </footer>
+    </main>
+
+    <div class="modal-overlay" id="apiKeyModal" hidden>
+      <div class="modal">
+        <h2>Connect an API key</h2>
+        <p>
+          This app reads live data from OpenWeatherMap. Get a free key from your
+          <a
+            href="https://home.openweathermap.org/api_keys"
+            target="_blank"
+            rel="noopener"
+            >OpenWeatherMap account</a
+          >, then paste it below. It's stored only in this browser.
+        </p>
+        <label for="apiKeyInput" class="visually-hidden"
+          >OpenWeatherMap API key</label
+        >
+        <input
+          class="input"
+          id="apiKeyInput"
+          type="text"
+          placeholder="Paste your API key"
+        />
+        <div class="message-row" id="apiKeyMessage" data-tone="error"></div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--primary" id="saveKeyBtn">
+            Save key
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
